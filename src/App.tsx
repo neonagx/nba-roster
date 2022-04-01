@@ -8,6 +8,25 @@ import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+const accordionProps = {
+  sx: {
+    pointerEvents: "none",
+  },
+  expandIcon: (
+    <ExpandMoreIcon
+      sx={{
+        pointerEvents: "auto"
+      }}
+    />
+  )
+};
+
 const App = () => {
   const [players, setPlayers] = useState<any[]>([]);
 
@@ -26,8 +45,16 @@ const App = () => {
 
   return (
     <div className="App">
+      <Accordion>
+        <AccordionSummary {...accordionProps}>
+          <Typography>MY DREAM ROSTER</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <NbaGrid />
+        </AccordionDetails>
+      </Accordion>
       {players.map((player) => (
-        <Card className={"playerCard"} sx={{ width: '100%',maxWidth: 345, display: 'inline-block'}} key={player.personId}>
+        <Card className={"playerCard"} sx={{ width: '100%', maxWidth: 345, display: 'inline-block'}} key={player.personId}>
           <CardHeader
           title={`${player.firstName} ${player.lastName}`}
           />
@@ -47,7 +74,7 @@ const App = () => {
           <Button variant='contained' onClick={() => addToGrid(player.personId)}>Add to Dream Roster</Button>
         </Card>
       ))}
-      <NbaGrid />
+      
     </div>
   );
 }
