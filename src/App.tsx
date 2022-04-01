@@ -29,9 +29,12 @@ const accordionProps = {
 
 const App = () => {
   const [players, setPlayers] = useState<any[]>([]);
+  const [roster, setRoster] = useState<any[]>([]);
 
   const addToGrid = (id: string) => {
-    console.log('Adding', id);
+    let addingPlayer: any = {};
+    addingPlayer = players.filter((player) => player.personId === id)[0];
+    setRoster((prevState) => [...prevState, addingPlayer])
   }
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const App = () => {
           <Typography>MY DREAM ROSTER</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <NbaGrid />
+          <NbaGrid roster={roster}/>
         </AccordionDetails>
       </Accordion>
       {players.map((player) => (
