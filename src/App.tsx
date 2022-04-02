@@ -58,10 +58,10 @@ const App = () => {
     <div className="App">
       <Accordion>
         <AccordionSummary {...accordionProps}>
-          <Typography>MY DREAM ROSTER</Typography>
+          <Typography>MY NBA FANTASY TEAM ROSTER</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <NbaGrid roster={roster}/>
+          <NbaGrid roster={roster} setRoster={setRoster}/>
         </AccordionDetails>
       </Accordion>
       {players.map((player) => (
