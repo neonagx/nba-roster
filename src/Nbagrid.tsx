@@ -1,9 +1,9 @@
-import React, { BaseSyntheticEvent, useEffect, useState} from 'react';
+import React, { FC, BaseSyntheticEvent, useEffect, useState, ReactElement} from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import { PlayerRow, Player} from './Interfaces';
+import { PlayerRow, Player, NbaGridProps} from './Interfaces';
 
-const NbaGrid = (props: any) => {
+const NbaGrid: FC<NbaGridProps> = (props): ReactElement => {
   const { roster, setRoster } = props;
   const [rows, setRows] = useState<PlayerRow[]>([])
 
@@ -43,7 +43,11 @@ const NbaGrid = (props: any) => {
 
   return (
     <div>
-      <DataGrid rows={rows} columns={columns} style={{ height: '39.5vh', width: '100%', maxWidth: '100%', overflowY: 'hidden' }} />
+      <DataGrid 
+        rows={rows} 
+        columns={columns} 
+        sx={{ height: '27em', width: '100%', maxWidth: '100%', overflowY: 'hidden' }} 
+        rowsPerPageOptions={[]} />
     </div>
   );
 }

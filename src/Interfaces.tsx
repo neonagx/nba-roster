@@ -11,3 +11,8 @@ export interface PlayerRow {
     lastName: string,
     position: string
 }
+
+export type NbaGridProps = {
+    roster: Player[];
+    setRoster: React.Dispatch<React.SetStateAction<Player[]>>;
+}

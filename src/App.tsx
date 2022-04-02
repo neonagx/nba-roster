@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import NbaGrid from './Nbagrid';
 import './App.css';
 import Card from '@mui/material/Card';
@@ -29,7 +29,7 @@ const accordionProps = {
   )
 };
 
-const App = () => {
+const App: FC = (): ReactElement => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [roster, setRoster] = useState<Player[]>([]);
 
@@ -64,7 +64,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Accordion sx={{ width: '450px', maxWidth: '100%', position: 'fixed', zIndex: '100', right: '50%', left: '50%', justifyContent: 'center'}}>
+      <Accordion sx={{ width: '450px', maxWidth: '100%', position: 'fixed', zIndex: '100', left: '50%', transform: "translate(-50%, 0)"}}>
         <AccordionSummary {...accordionProps}>
           <Typography>MY NBA FANTASY TEAM ROSTER</Typography>
         </AccordionSummary>
