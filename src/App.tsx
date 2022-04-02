@@ -14,6 +14,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import { Player } from './Interfaces';
+
 const accordionProps = {
   sx: {
     pointerEvents: "none",
@@ -28,18 +30,24 @@ const accordionProps = {
 };
 
 const App = () => {
-  const [players, setPlayers] = useState<any[]>([]);
-  const [roster, setRoster] = useState<any[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [roster, setRoster] = useState<Player[]>([]);
 
   const addToGrid = (id: string) => {
-    let addingPlayer: any = {};
+    let addingPlayer: Player;
     addingPlayer = players.filter((player) => player.personId === id)[0];
     setRoster((prevState) => {
-      let result: any[] = [];
+      let result: Player[] = [];
+      if(prevState.length === 5) {
+        alert('Cannot Add more than 5 players');
+        return prevState;
+      }
+
       if(prevState.includes(addingPlayer) === false && prevState.length < 5) {
         result = [...prevState, addingPlayer];
       } else {
         result = [...prevState];
+        alert('Cannot Add Same Player Twice');
       }
       return result;
     })
@@ -56,16 +64,16 @@ const App = () => {
 
   return (
     <div className="App">
-      <Accordion>
+      <Accordion sx={{ width: '450px', maxWidth: '100%', position: 'fixed', zIndex: '100', right: '50%', left: '50%', justifyContent: 'center'}}>
         <AccordionSummary {...accordionProps}>
           <Typography>MY NBA FANTASY TEAM ROSTER</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{maxWidth: '100%'}}>
           <NbaGrid roster={roster} setRoster={setRoster}/>
         </AccordionDetails>
       </Accordion>
       {players.map((player) => (
-        <Card className={"playerCard"} sx={{ width: '100%', maxWidth: 345, display: 'inline-block'}} key={player.personId}>
+        <Card className={"playerCard"} sx={{ width: '100%', maxWidth: 345, display: 'inline-block', marginTop: '7vh'}} key={player.personId}>
           <CardHeader
           title={`${player.firstName} ${player.lastName}`}
           />
@@ -78,7 +86,7 @@ const App = () => {
           />
           <CardContent>
             PLAYER POSITION: 
-          <Avatar alt={'position'} style={{display: 'inline-flex', marginLeft: '10px'}}>
+          <Avatar alt={'position'} sx={{display: 'inline-flex', marginLeft: '10px'}}>
               {player.pos}
           </Avatar>
           </CardContent>

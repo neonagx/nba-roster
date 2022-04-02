@@ -1,31 +1,30 @@
 import React, { BaseSyntheticEvent, useEffect, useState} from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import { PlayerRow, Player} from './Interfaces';
 
 const NbaGrid = (props: any) => {
   const { roster, setRoster } = props;
-  const [rows, setRows] = useState<any[]>([])
+  const [rows, setRows] = useState<PlayerRow[]>([])
 
   useEffect(() => {
     setRows([]);
-    let newRows: any = [];
-    roster.map((player: any) => 
+    let newRows: PlayerRow[] = [];
+    roster.map((player: Player) => 
       newRows.push({
         id: player.personId,
         firstName: player.firstName,
         lastName: player.lastName,
         position: player.pos,
-        team: player.lastAffilation
       })
     );
     setRows(newRows);
   }, [roster]);
 
   const columns: GridColDef[] = [
-    { field: 'firstName', headerName: 'First Name', width: 150 },
-    { field: 'lastName', headerName: 'Last Name', width: 150 },
-    { field: 'position', headerName: 'Position', width: 150 },
-    { field: 'team', headerName: 'Team', width: 150 },
+    { field: 'firstName', headerName: 'First Name', width: 100 },
+    { field: 'lastName', headerName: 'Last Name', width: 100 },
+    { field: 'position', headerName: 'Position', width: 100 },
     { field: 'removeButton', headerName: '', renderCell: (params) => {
       const onClick = (e: BaseSyntheticEvent) => {
         e.stopPropagation();
@@ -33,7 +32,7 @@ const NbaGrid = (props: any) => {
         let newRows = rows.filter(row => row.id !== params.id);
         setRows(newRows);
 
-        setRoster((prevState: any[]) => {
+        setRoster((prevState: Player[]) => {
           let newState = prevState.filter(state => state.personId !== params.id);
           return newState;
         })
@@ -43,8 +42,8 @@ const NbaGrid = (props: any) => {
   ]
 
   return (
-    <div style={{ height: '60vh', width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pagination pageSize={5} />
+    <div>
+      <DataGrid rows={rows} columns={columns} style={{ height: '39.5vh', width: '100%', maxWidth: '100%', overflowY: 'hidden' }} />
     </div>
   );
 }
