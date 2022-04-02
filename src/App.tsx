@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
-import NbaGrid from './Nbagrid';
 import './App.css';
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Player } from './Interfaces';
+import NbaGrid from './Nbagrid';
 
 const accordionProps = {
   sx: {
@@ -90,7 +91,7 @@ const App: FC = (): ReactElement => {
               {player.pos}
           </Avatar>
           </CardContent>
-          <Button variant='contained' onClick={() => addToGrid(player.personId)}>Add to Dream Roster</Button>
+          <Button variant='contained' onClick={() => addToGrid(player.personId)}>Add to My Fantasy Team Roster</Button>
         </Card>
       ))}
       
