@@ -34,7 +34,15 @@ const App = () => {
   const addToGrid = (id: string) => {
     let addingPlayer: any = {};
     addingPlayer = players.filter((player) => player.personId === id)[0];
-    setRoster((prevState) => [...prevState, addingPlayer])
+    setRoster((prevState) => {
+      let result: any[] = [];
+      if(prevState.includes(addingPlayer) === false && prevState.length < 5) {
+        result = [...prevState, addingPlayer];
+      } else {
+        result = [...prevState];
+      }
+      return result;
+    })
   }
 
   useEffect(() => {
