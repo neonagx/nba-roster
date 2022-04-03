@@ -1,6 +1,7 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import './App.css';
 
+// Material UI Card Elements
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -8,27 +9,23 @@ import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 
+// Material UI Accordion ELements
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+// Local types and style imports
 import { Player } from './Interfaces';
 import NbaGrid from './Nbagrid';
-
-const accordionProps = {
-  sx: {
-    pointerEvents: "none",
-  },
-  expandIcon: (
-    <ExpandMoreIcon
-      sx={{
-        pointerEvents: "auto"
-      }}
-    />
-  )
-};
+import {
+  PositionColor,
+  AccordionStyle,
+  AccordionDetailsStyle,
+  CardStyle,
+  AvatarStyle
+} from './Styles';
 
 const App: FC = (): ReactElement => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -39,12 +36,15 @@ const App: FC = (): ReactElement => {
     addingPlayer = players.filter((player) => player.personId === id)[0];
     setRoster((prevState) => {
       let result: Player[] = [];
-      if(prevState.length === 5) {
+
+      // Prevents adding more than 5 players in the data grid.
+      if (prevState.length === 5) {
         alert('Cannot Add more than 5 players');
         return prevState;
       }
 
-      if(prevState.includes(addingPlayer) === false && prevState.length < 5) {
+      // Prevents adding same players
+      if (prevState.includes(addingPlayer) === false && prevState.length < 5) {
         result = [...prevState, addingPlayer];
       } else {
         result = [...prevState];
@@ -53,6 +53,16 @@ const App: FC = (): ReactElement => {
       return result;
     })
   }
+
+  const accordionProps = {
+    expandIcon: (
+      <ExpandMoreIcon
+        sx={{
+          pointerEvents: "auto"
+        }}
+      />
+    )
+  };
 
   useEffect(() => {
     fetch(
@@ -65,18 +75,18 @@ const App: FC = (): ReactElement => {
 
   return (
     <div className="App">
-      <Accordion sx={{ width: '450px', maxWidth: '100%', position: 'fixed', zIndex: '100', left: '50%', transform: "translate(-50%, 0)"}}>
+      <Accordion sx={AccordionStyle}>
         <AccordionSummary {...accordionProps}>
           <Typography>MY NBA FANTASY TEAM ROSTER</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{maxWidth: '100%'}}>
-          <NbaGrid roster={roster} setRoster={setRoster}/>
+        <AccordionDetails sx={AccordionDetailsStyle}>
+          <NbaGrid roster={roster} setRoster={setRoster} />
         </AccordionDetails>
       </Accordion>
       {players.map((player) => (
-        <Card className={"playerCard"} sx={{ width: '100%', maxWidth: 345, display: 'inline-block', marginTop: '7vh'}} key={player.personId}>
+        <Card className={"playerCard"} sx={CardStyle} key={player.personId}>
           <CardHeader
-          title={`${player.firstName} ${player.lastName}`}
+            title={`${player.firstName} ${player.lastName}`}
           />
           <CardMedia
             component="img"
@@ -86,15 +96,15 @@ const App: FC = (): ReactElement => {
             alt="Player Image Not Available"
           />
           <CardContent>
-            PLAYER POSITION: 
-          <Avatar alt={'position'} sx={{display: 'inline-flex', marginLeft: '10px'}}>
+            PLAYER POSITION:
+            <Avatar alt={'position'} sx={{ ...AvatarStyle, backgroundColor: PositionColor(player.pos) }}>
               {player.pos}
-          </Avatar>
+            </Avatar>
           </CardContent>
           <Button variant='contained' onClick={() => addToGrid(player.personId)}>Add to My Fantasy Team Roster</Button>
         </Card>
       ))}
-      
+
     </div>
   );
 }
