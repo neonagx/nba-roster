@@ -1,8 +1,8 @@
 # Getting Started with NBA-Fantasy Team Roster
 
-Step 1: Git clone the repo or Unzip the nba-roster folder
-Step 2: Open nba-roster in the terminal and run 'npm ci' in order to clean build node_modules and dependencies.
-Step 3: Run 'npm start'
+Step 1: Git clone the repo or Unzip the nba-roster folder.\
+Step 2: Open nba-roster in the terminal and run 'npm ci' in order to clean build node_modules and dependencies.\
+Step 3: Run 'npm start'.\
 
 ## Available Scripts
 
